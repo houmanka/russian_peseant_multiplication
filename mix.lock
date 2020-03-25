@@ -1,0 +1,5 @@
+%{
+  "justify": {:hex, :justify, "1.1.0", "f3ae9b74830b0360bddb09a2c71e513004fb4b44d9d74be1f9962022bf5662fd", [:mix], [], "hexpm", "9b6d9b4a94b7ed526f0364075aacb7ba8c8dde6214a9a07f69ae95ff72f7f46b"},
+  "monad": {:hex, :monad, "1.0.5", "bd02263a8dad0894433ca3283ebb6f71a55799e1cd17bda1e8b2ea9e14eeb9c5", [:mix], [], "hexpm", "d8ebe20971160e96bd6cdf11b5e8b5c24b70fddde3d198e5f7c3b5ebfbc78d6e"},
+  "monadex": {:hex, :monadex, "1.1.3", "54e32ce327b728afb8290b45c35137489f8010078dec9fd840a2efc188549795", [:mix], [], "hexpm", "e1821a1ab179aec4a5cdcbafa88b400933f3e46510ed2fd331ae46e961ef7c79"},
+}
