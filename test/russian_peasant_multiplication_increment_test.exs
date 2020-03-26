@@ -1,9 +1,9 @@
-defmodule RussianPeasantMultiplication.IncreamentTest do
+defmodule RussianPeasantMultiplication.IncrementTest do
   use ExUnit.Case
-  doctest RussianPeasantMultiplication.Increament
+  doctest RussianPeasantMultiplication.Increment
 
   import Monad.Result
-  alias RussianPeasantMultiplication.Increament, as: RPM_Inc
+  alias RussianPeasantMultiplication.Increment, as: RPM_Inc
 
   test "max number must be a number" do
     items = [ %{requested: "238", max_round: "4"},
@@ -11,13 +11,13 @@ defmodule RussianPeasantMultiplication.IncreamentTest do
               %{requested: "238", max_round: 4}
             ]
     Enum.filter(items, fn(item) ->
-      res = RPM_Inc.increament(item.requested, item.max_round)
+      res = RPM_Inc.increment(item.requested, item.max_round)
       assert res.error == "Requested number and Max round must be numbers"
     end)
   end
 
   test "max number must be a number greater than zero" do
-    res = RPM_Inc.increament(238, 0)
+    res = RPM_Inc.increment(238, 0)
     assert res.error == "Must be greater than zero"
   end
 

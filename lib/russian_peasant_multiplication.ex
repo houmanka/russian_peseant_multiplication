@@ -5,7 +5,7 @@ defmodule RussianPeasantMultiplication do
   import Monad.Result
 
   alias RussianPeasantMultiplication.{
-    Decreament, Increament, Combine, Filter, Sum }
+    Decrement, Increment, Combine, Filter, Sum }
 
 
   @errors %{
@@ -27,18 +27,18 @@ defmodule RussianPeasantMultiplication do
 
   def multiply(first, second) when is_valid(first) and is_valid(second) do
 
-    # pass the first number to decreament
-    dec_list = Decreament.decreament(first)
+    # pass the first number to decrement
+    dec_list = Decrement.decrement(first)
     dec_list = unwrap!(dec_list)
 
     # count the number of indexes
     max_round = Enum.count(dec_list)
 
-    # pass the second number + the number of indexes to increament
-    inc_list = Increament.increament(second, max_round)
+    # pass the second number + the number of indexes to increment
+    inc_list = Increment.increment(second, max_round)
     inc_list = unwrap!(inc_list)
 
-    # combine increament and decreament into a list of tuples
+    # combine increment and decrement into a list of tuples
     combine = Combine.combine(dec_list, inc_list)
     combine = unwrap!(combine)
 

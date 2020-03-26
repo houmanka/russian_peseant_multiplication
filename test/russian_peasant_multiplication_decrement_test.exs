@@ -1,6 +1,6 @@
-defmodule RussianPeasantMultiplication.DecreamentTest do
+defmodule RussianPeasantMultiplication.DecrementTest do
   use ExUnit.Case
-  doctest RussianPeasantMultiplication.Decreament
+  doctest RussianPeasantMultiplication.Decrement
 
   # test "greets the world" do
   #   assert RussianPeasantMultiplication.hello() == :world
