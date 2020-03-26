@@ -1,11 +1,15 @@
 # RussianPeasantMultiplication
 
-**TODO: Add description**
+https://medium.com/@houmanka/russian-peasant-multiplication-with-elixir-part-1-77bfb2461a43 for part 1
+
+This is still in building. Monad in `RussianPeasantMultiplication` hasn't been used properly
+
+We should not wrap > unwrap monad, it is silly :) 
+I will fix all of these as I am writting the next article
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `russian_peasant_multiplication` to your list of dependencies in `mix.exs`:
+The package can be installed by adding `russian_peasant_multiplication` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
@@ -14,8 +18,4 @@ def deps do
   ]
 end
 ```
-
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/russian_peasant_multiplication](https://hexdocs.pm/russian_peasant_multiplication).
 
