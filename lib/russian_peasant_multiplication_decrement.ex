@@ -8,25 +8,29 @@ defmodule RussianPeasantMultiplication.Decrement do
   }
 
   @doc """
-  Accepts a number and reduce this number to be <= 1
+  Accepts a monad of a number and reduce this number to be <= 1
 
   ### Examples
 
     iex> import Monad.Result
     iex> alias RussianPeasantMultiplication.Decrement, as: RPM_Dec
     RussianPeasantMultiplication.Decrement
-    iex> result = RPM_Dec.decrement(13)
+    iex> result = success(13) |> RPM_Dec.decrement()
     iex> unwrap!(result)
     [13, 6, 3, 1]
-    iex> result = RPM_Dec.decrement(0)
+    iex> result = success(0) |> RPM_Dec.decrement()
     iex> result.error
     "Must be greater than zero"
-    iex> result = RPM_Dec.decrement("asdf")
+    iex> result = success("asdf") |> RPM_Dec.decrement()
     iex> result.error
     "Must be non negetive number"
 
   """
 
+  def decrement(%Monad.Result{type: :ok} = state) do
+    state.value
+    |> decrement
+  end
   def decrement(a_number) when a_number <= 0, do: error(@errors.zero)
   def decrement(a_number) when is_number(a_number) do
     state_func = fn(a_number) -> [a_number] |> success() end

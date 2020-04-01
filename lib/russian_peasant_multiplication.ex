@@ -3,10 +3,12 @@ defmodule RussianPeasantMultiplication do
 
   import MyInteger, only: [is_valid: 1]
   import Monad.Result
+  use Monad.Operators
 
   alias RussianPeasantMultiplication.{
     Decrement, Increment, Combine, Filter, Sum }
 
+  # defstruct first: 0, second: 0
 
   @errors %{
     zero: "Must be number greater than zero",
@@ -22,41 +24,32 @@ defmodule RussianPeasantMultiplication do
     RussianPeasantMultiplication
     iex> RPM.multiply(13, 238)
     3094
+    iex> RPM.multiply(13, -1)
+    "Must be number greater than zero"
 
   """
 
   def multiply(first, second) when is_valid(first) and is_valid(second) do
 
-    # pass the first number to decrement
-    dec_list = Decrement.decrement(first)
-    dec_list = unwrap!(dec_list)
+    # data = %__MODULE__{first: first, second: second, originals: []}
 
-    # count the number of indexes
-    max_round = Enum.count(dec_list)
+    # result = success(data) # Wrap user with the "success" monad state
+    #          ~>> fn data -> Decrement.decrement(data) end
+    #          ~>> fn data -> Increment.increment(data) end
+    #          ~>> fn data -> Combine.combine(data) end
+    #          ~>> fn data -> Filter.filter(data) end
 
-    # pass the second number + the number of indexes to increment
-    inc_list = Increment.increment(second, max_round)
-    inc_list = unwrap!(inc_list)
-
-    # combine increment and decrement into a list of tuples
-    combine = Combine.combine(dec_list, inc_list)
-    combine = unwrap!(combine)
-
-    # remove the even number by filtering the first number
-    filter = Filter.filter(combine)
-    filter = unwrap!(filter)
-
-    # Sum the second numbers in the map
-    sum = Sum.sum_of(filter)
-    unwrap!(sum)
-
+    first = success(first)
+    second = success(second)
+    with  decrement <- Decrement.decrement(first),
+          increment <- Increment.increment(second, decrement),
+          combine <- Combine.combine(decrement, increment),
+          filter <- Filter.filter(combine),
+          sum_of <- Sum.sum_of(filter) do
+            sum_of |> unwrap!()
+    end
 
   end
   def multiply(_first, _second), do: @errors.zero
-
-
-
-
-
 
 end

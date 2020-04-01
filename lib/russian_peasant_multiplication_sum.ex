@@ -4,19 +4,19 @@ defmodule RussianPeasantMultiplication.Sum do
 
 
   @doc """
-  Accepts a list and return sum of the numbers
+  Accepts a Monad list and return a Monad sum of the numbers
 
   ### Examples
 
     iex> import Monad.Result
     iex> alias RussianPeasantMultiplication.Sum, as: RPM_Sum
     RussianPeasantMultiplication.Sum
-    iex> result = RPM_Sum.sum_of([238, 952, 1904])
+    iex> result = RPM_Sum.sum_of(success([238, 952, 1904]))
     iex> unwrap!(result)
     3094
 
   """
-
+  def sum_of(%Monad.Result{type: :ok} = list), do: list.value |> sum_of
   def sum_of([head | tail]) do
     sum_of(tail, success(head) )
   end

@@ -7,28 +7,33 @@ defmodule RussianPeasantMultiplication.Combine do
   }
 
   @doc """
-  Accepts 2 lists, create a list of tuples.
-  list1 = [13, 6, 3, 1]
-  list2 = [238, 476, 952, 1904]
-  expected = [{13, 238}, {6, 476}, {3, 952}, {1, 1904}]
+  Accepts 2 Monad lists, create a Monad list of tuples.
+  list1 = success([13, 6, 3, 1])
+  list2 = success([238, 476, 952, 1904])
+  expected = %Monad.Result{value: [{13, 238}, {6, 476}, {3, 952}, {1, 1904}], type: :ok, error: nil}
 
   ### Examples
 
     iex> import Monad.Result
     iex> alias RussianPeasantMultiplication.Combine, as: RPM_Combine
     RussianPeasantMultiplication.Combine
-    iex> list1 = [13, 6, 3, 1]
-    iex> list2 = [238, 476, 952, 1904]
+    iex> list1 = success([13, 6, 3, 1])
+    iex> list2 = success([238, 476, 952, 1904])
     iex> result = RPM_Combine.combine(list1, list2)
     iex> unwrap!(result)
     [{13, 238}, {6, 476}, {3, 952}, {1, 1904}]
 
   """
+  def combine(
+    %Monad.Result{type: :ok} = first,
+    %Monad.Result{type: :ok} = second ) do
+      combine(first.value, second.value)
+  end
+
   def combine(list1, list2) when is_list(list1) and is_list(list2) do
     combine([list1, list2])
   end
   def combine(_, _), do: error(@errors.list)
-
 
   defp combine([_list1, _list2] = lists) do
     func = fn(f_head, s_head) -> [{f_head, s_head}] end

@@ -8,10 +8,10 @@ defmodule RussianPeasantMultiplication.Filter do
   }
 
   @doc """
-  Accepts a list of tuple and remove the index if the
+  Accepts a Monad list of tuple and remove the index if the
   tuple's first number is even and return the second number
-  list1 = [{13, 238}, {6, 476}, {3, 952}, {1, 1904}]
-  expected = [238, 952, 1904]
+  list1 = success([{13, 238}, {6, 476}, {3, 952}, {1, 1904}])
+  expected = %Monad.Result{value: [238, 952, 1904], error: nil, type: :ok}
 
   ### Examples
 
@@ -24,11 +24,11 @@ defmodule RussianPeasantMultiplication.Filter do
     [238, 952, 1904]
 
   """
+  def filter(%Monad.Result{type: :ok} = list), do: list.value |> filter()
   def filter(list) when is_list(list) do
     filter(list, [])
   end
   def filter(_), do: error(@errors.list)
-
 
   defp filter(list, state) do
     func = fn({item1, item2}) ->

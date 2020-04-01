@@ -1,3 +1,4 @@
+require IEx
 defmodule RussianPeasantMultiplication.Increment do
 
   import Monad.Result
@@ -8,21 +9,33 @@ defmodule RussianPeasantMultiplication.Increment do
   }
 
   @doc """
-  Accepts a number and max number of duplications, It will duplicates according the max number of duplications
+  Accepts a monad of number and a monad list of decremented numbers, It will duplicates according the max number of dectemented input
 
   ### Examples
 
     iex> import Monad.Result
     iex> alias RussianPeasantMultiplication.Increment, as: RPM_Inc
     RussianPeasantMultiplication.Increment
-    iex> result = RPM_Inc.increment(238, 4)
+    iex> first = success(238)
+    iex> second = success([13, 6, 3, 1])
+    iex> result = RPM_Inc.increment(first, second)
     iex> unwrap!(result)
     [238, 476, 952, 1904]
-    iex> result = RPM_Inc.increment(0, 0)
+    iex> first = success(0)
+    iex> second = success([])
+    iex> result = RPM_Inc.increment(first, second)
     iex> result.error
     "Must be greater than zero"
 
   """
+
+  def increment(
+    %Monad.Result{type: :ok} = first,
+    %Monad.Result{type: :ok} = second ) do
+      second = second.value |> Enum.count
+      increment(first.value, second)
+  end
+
   def increment(a_number, _) when a_number <= 0, do: error(@errors.zero)
   def increment(_, max_round) when max_round <= 0, do: error(@errors.zero)
   def increment(a_number, max_round)
